@@ -1,0 +1,21 @@
+name: Bug Report
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: SDK Version
+    validations:
+      required: true
+  - type: input
+    id: python_version
+    attributes:
+      label: Python Version
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
