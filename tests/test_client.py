@@ -15,7 +15,7 @@ class TestPlatform5(unittest.TestCase):
 
     def test_default_base_url(self):
         app = Platform5(api_key="test-key")
-        self.assertEqual(app._client._base_url, "http://localhost:8084")
+        self.assertEqual(app._client._base_url, "https://api.advantaplus.ai")
 
     def test_custom_base_url(self):
         app = Platform5(api_key="test-key", base_url="http://example.com")

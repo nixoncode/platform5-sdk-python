@@ -17,7 +17,7 @@ from platform5.services.sms import SMS
 import requests
 
 
-DEFAULT_BASE_URL = "http://localhost:8084"
+DEFAULT_BASE_URL = "https://api.advantaplus.ai"
 
 
 class HttpClient:
