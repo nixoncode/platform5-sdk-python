@@ -38,6 +38,10 @@ print(status.status)
 # Check balance
 balance = client.account.get_balance()
 print(balance.available_balance, balance.currency)
+
+# Buy airtime
+airtime = client.airtime.buy(phone_number="+254712345678", amount=100)
+print(airtime.transaction_id, airtime.status)
 ```
 
 ## Configuration
@@ -57,6 +61,7 @@ Platform5(
 | `client.email.send(to, subject, body, from_, body_type?)` | POST /v1/email/send |
 | `client.messages.get(id)` | GET /v1/messages/{id} |
 | `client.account.get_balance()` | GET /v1/balance |
+| `client.airtime.buy(phone_number, amount)` | POST /v1/airtime/buy |
 | `client.health()` | GET /health |
 
 ## Error Handling
@@ -82,7 +87,7 @@ except Platform5Error as e:
 
 ## Idempotency
 
-`sms.send()` and `email.send()` automatically generate a UUID `Idempotency-Key` header for every request.
+`sms.send()`, `email.send()`, and `airtime.buy()` automatically generate a UUID `Idempotency-Key` header for every request.
 
 ## Requirements
 

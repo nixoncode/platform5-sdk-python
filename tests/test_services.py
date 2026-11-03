@@ -98,5 +98,37 @@ class TestAccount(unittest.TestCase):
         self.assertEqual(resp.currency, "KES")
 
 
+class TestAirtime(unittest.TestCase):
+    @patch("platform5.client.requests.Session.request")
+    def test_buy(self, mock_request):
+        mock_request.return_value = _mock_response(data={
+            "transaction_id": "1", "phone_number": "+254712345678",
+            "amount": 100, "actual_cost": 100, "status": "completed",
+            "created_at": "2024-06-01T10:00:00Z",
+        })
+
+        app = Platform5(api_key="test")
+        resp = app.airtime.buy(phone_number="+254712345678", amount=100)
+
+        self.assertEqual(resp.transaction_id, "1")
+        self.assertEqual(resp.status, "completed")
+
+    @patch("platform5.client.requests.Session.request")
+    def test_buy_sends_idempotency_key(self, mock_request):
+        mock_request.return_value = _mock_response(data={
+            "transaction_id": "1", "phone_number": "+254712345678",
+            "amount": 100, "actual_cost": 100, "status": "completed",
+            "created_at": "2024-06-01T10:00:00Z",
+        })
+
+        app = Platform5(api_key="test")
+        app.airtime.buy(phone_number="+254712345678", amount=100)
+
+        _, kwargs = mock_request.call_args
+        headers = kwargs.get("headers", {})
+        self.assertIn("Idempotency-Key", headers)
+        self.assertEqual(kwargs["json"], {"phone_number": "+254712345678", "amount": 100})
+
+
 if __name__ == "__main__":
     unittest.main()

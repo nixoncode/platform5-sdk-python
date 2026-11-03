@@ -10,6 +10,7 @@ from platform5.errors import (
     ValidationError,
 )
 from platform5.services.account import Account
+from platform5.services.airtime import Airtime
 from platform5.services.email import Email
 from platform5.services.messages import Messages
 from platform5.services.sms import SMS
@@ -70,6 +71,7 @@ class Platform5:
         self._email = Email(self._client)
         self._messages = Messages(self._client)
         self._account = Account(self._client)
+        self._airtime = Airtime(self._client)
 
     @property
     def sms(self) -> SMS:
@@ -86,6 +88,10 @@ class Platform5:
     @property
     def account(self) -> Account:
         return self._account
+
+    @property
+    def airtime(self) -> Airtime:
+        return self._airtime
 
     def health(self) -> None:
         self._client.request("GET", "/health")

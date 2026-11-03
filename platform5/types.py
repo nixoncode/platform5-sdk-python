@@ -37,3 +37,15 @@ class BalanceResponse:
     available_balance: float
     current_balance: float
     currency: str
+
+
+@dataclass
+class BuyAirtimeResponse:
+    transaction_id: str
+    phone_number: str
+    amount: float
+    actual_cost: float
+    status: str
+    created_at: str
+    reference: str | None = None
+    provider: str | None = None
